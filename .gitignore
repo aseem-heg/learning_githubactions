@@ -2,3 +2,5 @@
 venv/
 
 .idea/
+
+learning_githubactions/__pycache__/
