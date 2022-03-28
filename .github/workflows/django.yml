@@ -1,30 +1,28 @@
-name: Django CI
+name: Run Django test
 
 on:
-  push:
-    branches: [ main ]
+  push: # push event
+    branches: [ main ] # when you push something directly to main branch
   pull_request:
-    branches: [ main ]
+    branches: [ main ] # when pr is created or updated to main branch
 
-jobs:
-  build:
+jobs: # multiple jobs run in parallel by default
+  build: # job id. Its not job name.
+    name: test job 1  # optional
 
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.7, 3.8, 3.9]
+    runs-on: ubuntu-latest # os to run this job on
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run Tests
-      run: |
-        python manage.py test
+      - name: checkout branch
+        uses: actions/checkout@v2
+      - name: Set up Python 3.8 # Task name in the job
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies # Task name in the job
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run django Tests # Task name in the job
+        run: |
+          python manage.py test
