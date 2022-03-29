@@ -7,11 +7,10 @@ on:
     branches: [ main ] # when pr is created or updated to main branch
 
 jobs: # multiple jobs run in parallel by default
+
   build: # job id. Its not job name.
     name: test job 1  # optional
-
     runs-on: ubuntu-latest # os to run this job on
-
     steps:
       - name: checkout branch
         uses: actions/checkout@v2
