@@ -1,16 +1,17 @@
-name: Run Django test
+name: Run Django test # workflow name
 
 on:
-  push: # push event
-    branches: [ main ] # when you push something directly to main branch
-  pull_request:
-    branches: [ main ] # when pr is created or updated to main branch
+  workflow_run:
+    workflows: [ Rebase on PR to main ] # depends on another workflow to be completed
+    types: [ completed ]
+
 
 jobs: # multiple jobs run in parallel by default
 
   build: # job id. Its not job name.
-    name: test job 1  # optional
+    name: run test  # optional
     runs-on: ubuntu-latest # os to run this job on
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # if rebase successful
     steps:
       - name: checkout branch
         uses: actions/checkout@v2
