@@ -11,7 +11,7 @@ jobs: # multiple jobs run in parallel by default
   build: # job id. Its not job name.
     name: run test  # optional
     runs-on: ubuntu-latest # os to run this job on
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }} # if rebase successful
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # if rebase successful
     steps:
       - name: checkout branch
         uses: actions/checkout@v2
@@ -26,4 +26,4 @@ jobs: # multiple jobs run in parallel by default
       - name: Run django Tests # Task name in the job
         run: |
           python manage.py test
-# TODO sometimes the branch is not rebasable when both master and feature branches are same. WHY?
+# TODO This file has to be on default branch for it to work
