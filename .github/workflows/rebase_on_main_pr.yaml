@@ -1,4 +1,4 @@
-name: Rebase on PR to main
+name: Rebase on main branch
 
 on:
   pull_request:

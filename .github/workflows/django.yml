@@ -2,7 +2,7 @@ name: Run Django test # workflow name
 
 on:
   workflow_run:
-    workflows: [ Rebase on PR to main ] # depends on another workflow to be completed
+    workflows: [ Rebase on main branch ] # depends on another workflow to be completed
     types: [ completed ]
 
 
@@ -26,3 +26,4 @@ jobs: # multiple jobs run in parallel by default
       - name: Run django Tests # Task name in the job
         run: |
           python manage.py test
+# TODO sometimes the branch is not rebasable when both master and feature branches are same. WHY?
