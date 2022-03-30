@@ -7,4 +7,8 @@ from django.views.generic import TemplateView
 
 
 class T1(TemplateView):
+    """
+    This view does nothing
+    """
     template_name = 'app1/homepage.html'
+
