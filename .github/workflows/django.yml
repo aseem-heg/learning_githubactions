@@ -1,30 +1,29 @@
-name: Django CI
+name: Run Django test # workflow name
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_run:
+    workflows: [ "Rebase on main branch" ] # depends on another workflow to be completed
+    types: [ completed ]
 
-jobs:
-  build:
 
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.7, 3.8, 3.9]
+jobs: # multiple jobs run in parallel by default
 
+  build: # job id. Its not job name.
+    name: run test  # optional
+    runs-on: ubuntu-latest # os to run this job on
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # if rebase successful
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run Tests
-      run: |
-        python manage.py test
+      - name: checkout branch
+        uses: actions/checkout@v2
+      - name: Set up Python 3.8 # Task name in the job
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies # Task name in the job
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run django Tests # Task name in the job
+        run: |
+          python manage.py test
+# TODO This file has to be on default branch for it to work
