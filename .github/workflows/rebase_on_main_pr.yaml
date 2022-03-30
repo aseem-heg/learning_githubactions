@@ -3,6 +3,7 @@ name: Rebase on main branch
 on:
   pull_request:
     branches: [ main ]
+    types: [ opened,reopened ]
 
 jobs:
   rebase:
@@ -19,3 +20,4 @@ jobs:
         uses: cirrus-actions/rebase@1.5
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+# TODO why is rebase running twice?
