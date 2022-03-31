@@ -19,3 +19,8 @@ jobs:
         uses: cirrus-actions/rebase@1.5
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: echo
+        run: |
+          echo "Rebase on main branch"
+# TODO why is rebase running twice?
