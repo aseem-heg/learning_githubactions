@@ -1,26 +1,27 @@
 name: Rebase on main branch
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  rebase:
-    name: Rebase on main branch
+  Django_test:
+    name: Django test
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.8 # Task name in the job
+        uses: actions/setup-python@v3
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          fetch-depth: 0
-
-      - name: automatic rebase
-        uses: cirrus-actions/rebase@1.5
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-
-      - name: echo
+          python-version: 3.8
+      - name: Install Dependencies # Task name in the job
         run: |
-          echo "Rebase on main branch"
-# TODO why is rebase running twice?
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run django Tests
+        run: |
+          python manage.py test
